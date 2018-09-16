@@ -377,3 +377,139 @@ let newCircle = new Circle(11, "red");
 ### Forskellen mellem javascript og java inheritance?
 
 ### Provide an number of examples to demonstrate the benefits of using TypeScript, including, types, interfaces, classes and generics
+
+### Explain about promises in ES-6 including, the problems they solve and a quick explanation of the Promise API:
+Et Promise objekt repræsenterer en senere udførelse af en opgave som foregår asynkronisk. Dvs. opgaven foregår senere imens senere kode, som ikke er asynkronisk bliver eksekveret ligesom det typisk ville foregå. Promises fortæller os at det her er en asynkronisk opgave, og har to parametre i en callback: resolve og reject. Resolve er hvis opgaven er fuldført og reject er hvis der gik en fejl under opgaven. Man bruger typisk promises hvis man skal hente noget data udefra, bl.a. i form af JSON eller XML. Promises er godt, fordi det gør det lettere at håndtere asynkroniske opgaver, så vi ikke behøver at tænke for meget over det med callbacks.
+
+##### Example(s) that demonstrate how to avoid the callback hell  (“Pyramid of Doom")
+Lad os sige det tager tre opgaver at bygge en båd:
+```
+let getWood = () => { return new Promise((resolve, reject) => { resolve(Got Wood) })};
+let buildBoat = () => { return new Promise((resolve, reject) => { resolve(Building a boat) })};
+let sailTheOcean = () => { return new Promise((resolve, reject) => { resolve(Sailing the ocean) })};
+
+// Resolve the promises with then(), which is a function promises has access too.
+
+getWood()
+.then(() => { return buildBoat() })
+.then(() => { return sailTheOcean() })
+.then(() => { console.log("The sailor is sailing!") })
+```
+
+##### Example(s) that demonstrate how to execute asynchronous (promise-based) code in serial or parallel.
+Der er to måder at køre promises på. Det ene er serial, som gennemføre en promise af gangen og giver den til en allerede eksisterende promise objekt. Det andet er parallel, som gennemføre flere promises af gangen på et bestemt tidspunkt.
+
+###### Serial
+Promises er meget cool, men hvad nu hvis vi gerne vil loope over promises og have en enkelt promise værdi til slut?
+Et eksempel kunne være:
+```
+function doSomethingAsync(i) {  
+    return new Promise((resolve) => {
+        setTimeout(() => { console.log(i); resolve(); }, 1000);
+    });
+}
+
+let vals = [1,2,3];  
+let chain = Promise.resolve();  
+
+for(let val of vals) {  
+    chain = chain.then(() => doSomethingAsync(val));
+}
+chain.then(() => console.log('complete'));  
+```
+
+I eksemplet har vi et array, og et promise objekt der i øjeblikket er tomt. Vi looper over hvert promise objekt der kommer ind i doSomethingAsync(i) og overskriver værdien i vores chain promise. På den måde har vi kun en enkelt værdi til slut.
+
+##### Parallel
+Hvis du på den anden side godt vil have at flere promises bliver færdige samtidigt set fra en parallel vinkel før du går videre til næste opgave, så skal du bruge Promise.all(), som tager et array af promises der skal være færdige på sammetid. Eksempel:
+
+```
+var promise1 = Promise.resolve(3);
+var promise2 = 42;
+var promise3 = new Promise(function(resolve, reject) {
+  setTimeout(resolve, 100, 'foo');
+});
+
+Promise.all([promise1, promise2, promise3]).then(function(values) {
+  console.log(values);
+});
+// expected output: Array [3, 42, "foo"]
+```
+then() går først igang når alle værdier i promise.all er gennemført.
+
+##### Example(s) that demonstrate error handling with promises
+Når vi laver fejlhåndtering med promises, skal vi først kigge på hvordan en promise fungere, en promise tager to arguementer med, resolve og reject
+Resolve returnere et promise der er løst, og reject returnere en promise der er afvist.
+
+Kode eksempel:
+
+```
+function callSix(number) {
+    return new Promise((resolve, reject) => {
+            setTimeout( () => {
+                crypto.randomBytes(number, function(err, buffer) {
+                    if(resolve) {
+                        let secureHex = buffer.toString("hex");
+                    resolve(secureHex);
+                    } else {
+                    reject("Your promise failed");
+                }
+            })
+        }, 0);
+    })
+}
+
+```
+
+### Explain about JavaScripts async/await, how it relates to promises and reasons to use it compared to the plain promise API.
+Async og await bruges til at gøre asynkroniske promises til synkronske. De bliver brugt til at gøre asynkroniske opgaver lette og overskuelige, men er ikke altid den bedste løsning med hensyn til performance.
+
+###### Provide examples to demonstrate
+For at kunne bruge await i en funktion, skal du først kalde på async, der fortæller funktionen at det her er en asynkronisk funktion. Derefter skal du kalde på await inde i funktionen hvor du kalder på en asynkronisk opgave aka noget der returnerer et promise.
+Et meget simpel eksempel kunne være:
+
+```
+function getNumber7() {
+    let number = 4;
+    return new Promise((resolve, reject) => {
+        setTimeout(() => { console.log("It went through"); resolve(number + 3); }, 5000);
+    })
+}
+
+async function letsGetAsync(){
+    const number await getNumber7()
+    return number;
+}
+console.log(letsGetsAsync()); // giver 7
+```
+... Efter 5 sekunder vil vi få et tal, som giver 7, fordi vi fortæller funktionen at før letsGetAsync() bliver eksekveret og går videre, skal den asynkroniske funktion returnere et tal først.
+
+###### Why this often is the preferred way of handling promises
+At bruge async await gør det meget mere overskueligt at kode i javascript, fordi du ikke behøver at tage særlig meget hensyn til asynkroniske opgaver på samme måde, fordi du gør dem synkronske.
+
+###### Error handling with async/await
+Der er mange måder at føre error handling på med promises, men her et simpel eksempel:
+```
+function handleError(resolve) {
+    if(!resolve.ok){
+       return resolve("Something went wrong!")
+    } else {
+        return resolve;
+    }
+}
+
+function fetchRequest() {
+    return fetch("https://swapi.co/api/people/1").then(resolve => handleError(resolve))
+}
+
+async function getPerson(){
+    const person = await fetchRequest();
+    console.log(person) // Hvis der er fejl vil person være "Something went wrong!"
+}
+
+getPerson();
+```
+Her der fortæller vi vores promise, at hvis requesten ikke er iorden, så ændrer person variablen til "Something went wrong!", ellers så skal det returnerer et objekt af en person fra star wars.
+
+###### Serial or parallel execution with async/await.
+
