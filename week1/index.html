@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="names"></div>
+    <button id="clickMe">Click Me to filter!</button>
+</body>
+<script>
+
+    const names = [{ name: "Lars", phone: "1234567" }, { name: "Peter", phone: "675843" }, { name: "Jan", phone: "98547" }, { name: "Bo", phone: "79345" }];
+
+    const stringOfNames = names.map(person => `<tr><td>${person.name}</td><td>${person.phone}</td></tr>`).join("");
+
+    const stringTable = `<table><tr><th>name</th><th>phone</th></tr>${stringOfNames}</table>`;
+
+    document.getElementById("names").innerHTML = stringTable;
+
+    function filterArray() {
+        const myFilteredArray = names.filter(person => person.name.length <= 3);
+
+        const filterOfNames = myFilteredArray.map(person => `<tr><td>${person.name}</td><td>${person.phone}</td></tr>`).join("");
+
+        const filterTable = `<table><tr><th>name</th><th>phone</th></tr>${filterOfNames}</table>`;
+
+        document.getElementById("names").innerHTML = filterTable;
+    }
+
+    document.getElementById("clickMe").addEventListener("click", filterArray);
+</script>
+
+</html>
