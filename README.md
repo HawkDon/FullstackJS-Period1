@@ -437,7 +437,7 @@ Promise.all([promise1, promise2, promise3]).then(function(values) {
 ```
 then() går først igang når alle værdier i promise.all er gennemført.
 
-##### Example(s) that demonstrate error handling with promises
+#### Example(s) that demonstrate error handling with promises
 Når vi laver fejlhåndtering med promises, skal vi først kigge på hvordan en promise fungere, en promise tager to arguementer med, resolve og reject
 Resolve returnere et promise der er løst, og reject returnere en promise der er afvist.
 
@@ -464,7 +464,7 @@ function callSix(number) {
 ### Explain about JavaScripts async/await, how it relates to promises and reasons to use it compared to the plain promise API.
 Async og await bruges til at gøre asynkroniske promises til synkronske. De bliver brugt til at gøre asynkroniske opgaver lette og overskuelige, men er ikke altid den bedste løsning med hensyn til performance.
 
-##### Provide examples to demonstrate
+#### Provide examples to demonstrate
 For at kunne bruge await i en funktion, skal du først kalde på async, der fortæller funktionen at det her er en asynkronisk funktion. Derefter skal du kalde på await inde i funktionen hvor du kalder på en asynkronisk opgave aka noget der returnerer et promise.
 Et meget simpel eksempel kunne være:
 
@@ -484,10 +484,10 @@ console.log(letsGetsAsync()); // giver 7
 ```
 ... Efter 5 sekunder vil vi få et tal, som giver 7, fordi vi fortæller funktionen at før letsGetAsync() bliver eksekveret og går videre, skal den asynkroniske funktion returnere et tal først.
 
-##### Why this often is the preferred way of handling promises
+#### Why this often is the preferred way of handling promises
 At bruge async await gør det meget mere overskueligt at kode i javascript, fordi du ikke behøver at tage særlig meget hensyn til asynkroniske opgaver på samme måde, fordi du gør dem synkronske.
 
-##### Error handling with async/await
+#### Error handling with async/await
 Der er mange måder at føre error handling på med promises, men her et simpel eksempel:
 ```
 function handleError(resolve) {
@@ -511,5 +511,5 @@ getPerson();
 ```
 Her der fortæller vi vores promise, at hvis requesten ikke er iorden, så ændrer person variablen til "Something went wrong!", ellers så skal det returnerer et objekt af en person fra star wars.
 
-##### Serial or parallel execution with async/await.
+#### Serial or parallel execution with async/await.
 
