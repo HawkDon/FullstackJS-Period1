@@ -374,9 +374,31 @@ Derefter kan vi nu lave en ny cirkel, med en radius og en farve:
 let newCircle = new Circle(11, "red");
 ```
 
-### Forskellen mellem javascript og java inheritance?
-
 ### Provide an number of examples to demonstrate the benefits of using TypeScript, including, types, interfaces, classes and generics
+Måden man laver en class i javascript er meget nemt, fordi man bare skal bruge keywordet “class” og det minder derfor meget om måden man laver en java class på.
+Fordelen ved at skrive i typescript er, at man ikke behøves at kende til native javascript fordi den selv laver det om til dens syntax hvis du har defineret det i din tsconfig-fil. Derudover er det ikke alle browserer endnu, som understøtter es6 derfor kan man ved hjælp af TypeScript oversætte det til noget kode som browseren forstår.
+
+```
+class Shape {
+```
+
+Man definerer en type ved at give variabel et navn, i dette tilfælde ‘color’ og så definerer du typen som i dette tilfælde er en ‘string’.
+
+```
+color: string;
+area: number;
+```
+
+Typescript gør det nemt, at håndtere type-checking også kaldet “duck typing”. Type-checking er nemt i TypeScript, da man blot behøver at lave et interface som vi kender det fra Java.
+
+```
+interface IBook {
+    title: string;
+    readonly author: string;
+    published?: string;
+    pages?: number;
+}
+```
 
 ### Explain about promises in ES-6 including, the problems they solve and a quick explanation of the Promise API:
 Et Promise objekt repræsenterer en senere udførelse af en opgave som foregår asynkronisk. Dvs. opgaven foregår senere imens senere kode, som ikke er asynkronisk bliver eksekveret ligesom det typisk ville foregå. Promises fortæller os at det her er en asynkronisk opgave, og har to parametre i en callback: resolve og reject. Resolve er hvis opgaven er fuldført og reject er hvis der gik en fejl under opgaven. Man bruger typisk promises hvis man skal hente noget data udefra, bl.a. i form af JSON eller XML. Promises er godt, fordi det gør det lettere at håndtere asynkroniske opgaver, så vi ikke behøver at tænke for meget over det med callbacks.
@@ -512,4 +534,39 @@ getPerson();
 Her der fortæller vi vores promise, at hvis requesten ikke er iorden, så ændrer person variablen til "Something went wrong!", ellers så skal det returnerer et objekt af en person fra star wars.
 
 #### Serial or parallel execution with async/await.
+En meget mere simpel måde at lave loops over serial execution er at bruge async await. Lad os tage vores tidligere serial eksempel og gøre det her istedet for:
 
+```
+function doSomethingAsync(i) {  
+    return new Promise((resolve) => {
+        setTimeout(() => { console.log(i); resolve(); }, 1000);
+    });
+}
+
+let vals = [1,2,3];  
+for(let val of vals) {  
+  await doSomethingAsync(val);
+}
+console.log('complete');  
+```
+
+Som du kan se er det meget mindre kode end tidligere eksempel.
+
+For parallel execution kan man simplificerer det endnu mere:
+
+```
+var promise1 = Promise.resolve(3);
+var promise2 = 42;
+var promise3 = new Promise(function(resolve, reject) {
+  setTimeout(resolve, 100, 'foo');
+});
+function awaitAll() {
+Promise.all([promise1, promise2, promise3]).then(function(values) {
+  console.log(values);
+});
+}
+awaitAll()
+
+// expected output: Array [3, 42, "foo"]
+//next line of code...
+```
