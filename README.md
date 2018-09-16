@@ -1,4 +1,6 @@
-#### Explain differences between Java and JavaScript. You should include both topics related to the fact that Java is a compiled language and JavaScript a scripted language, and general differences in language features.
+# Period-1 Vanilla JavaScript, es2015/15.., Node.js, Babel + Webpack and TypeScript
+
+### Explain differences between Java and JavaScript. You should include both topics related to the fact that Java is a compiled language and JavaScript a scripted language, and general differences in language features.
 Java er et sprog der skal compiles sprog, for at kunne køre på operativsystemer.
 Java compiler koden og fortæller om der er en fejl, før koden kører. Dette gør også at Java har en langsom runtime.
 Fordelen ved Javascript er at koden ikke skal compiles før den kan køre i browseren, for browseren forstår allerede vanilla javascript(ES5).
