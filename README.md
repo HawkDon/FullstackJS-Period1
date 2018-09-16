@@ -381,7 +381,7 @@ let newCircle = new Circle(11, "red");
 ### Explain about promises in ES-6 including, the problems they solve and a quick explanation of the Promise API:
 Et Promise objekt repræsenterer en senere udførelse af en opgave som foregår asynkronisk. Dvs. opgaven foregår senere imens senere kode, som ikke er asynkronisk bliver eksekveret ligesom det typisk ville foregå. Promises fortæller os at det her er en asynkronisk opgave, og har to parametre i en callback: resolve og reject. Resolve er hvis opgaven er fuldført og reject er hvis der gik en fejl under opgaven. Man bruger typisk promises hvis man skal hente noget data udefra, bl.a. i form af JSON eller XML. Promises er godt, fordi det gør det lettere at håndtere asynkroniske opgaver, så vi ikke behøver at tænke for meget over det med callbacks.
 
-##### Example(s) that demonstrate how to avoid the callback hell  (“Pyramid of Doom")
+#### Example(s) that demonstrate how to avoid the callback hell  (“Pyramid of Doom")
 Lad os sige det tager tre opgaver at bygge en båd:
 ```
 let getWood = () => { return new Promise((resolve, reject) => { resolve(Got Wood) })};
@@ -396,10 +396,10 @@ getWood()
 .then(() => { console.log("The sailor is sailing!") })
 ```
 
-##### Example(s) that demonstrate how to execute asynchronous (promise-based) code in serial or parallel.
+#### Example(s) that demonstrate how to execute asynchronous (promise-based) code in serial or parallel.
 Der er to måder at køre promises på. Det ene er serial, som gennemføre en promise af gangen og giver den til en allerede eksisterende promise objekt. Det andet er parallel, som gennemføre flere promises af gangen på et bestemt tidspunkt.
 
-###### Serial
+##### Serial
 Promises er meget cool, men hvad nu hvis vi gerne vil loope over promises og have en enkelt promise værdi til slut?
 Et eksempel kunne være:
 ```
@@ -464,7 +464,7 @@ function callSix(number) {
 ### Explain about JavaScripts async/await, how it relates to promises and reasons to use it compared to the plain promise API.
 Async og await bruges til at gøre asynkroniske promises til synkronske. De bliver brugt til at gøre asynkroniske opgaver lette og overskuelige, men er ikke altid den bedste løsning med hensyn til performance.
 
-###### Provide examples to demonstrate
+##### Provide examples to demonstrate
 For at kunne bruge await i en funktion, skal du først kalde på async, der fortæller funktionen at det her er en asynkronisk funktion. Derefter skal du kalde på await inde i funktionen hvor du kalder på en asynkronisk opgave aka noget der returnerer et promise.
 Et meget simpel eksempel kunne være:
 
@@ -484,10 +484,10 @@ console.log(letsGetsAsync()); // giver 7
 ```
 ... Efter 5 sekunder vil vi få et tal, som giver 7, fordi vi fortæller funktionen at før letsGetAsync() bliver eksekveret og går videre, skal den asynkroniske funktion returnere et tal først.
 
-###### Why this often is the preferred way of handling promises
+##### Why this often is the preferred way of handling promises
 At bruge async await gør det meget mere overskueligt at kode i javascript, fordi du ikke behøver at tage særlig meget hensyn til asynkroniske opgaver på samme måde, fordi du gør dem synkronske.
 
-###### Error handling with async/await
+##### Error handling with async/await
 Der er mange måder at føre error handling på med promises, men her et simpel eksempel:
 ```
 function handleError(resolve) {
@@ -511,5 +511,5 @@ getPerson();
 ```
 Her der fortæller vi vores promise, at hvis requesten ikke er iorden, så ændrer person variablen til "Something went wrong!", ellers så skal det returnerer et objekt af en person fra star wars.
 
-###### Serial or parallel execution with async/await.
+##### Serial or parallel execution with async/await.
 
